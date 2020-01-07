@@ -1,0 +1,53 @@
+<html xmlns:v-bind="http://www.w3.org/1999/xhtml" xmlns:v-on="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta charset="UTF-8">
+        <title>Title of the document</title>
+
+        <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+        <!--<script src="https://cdn.jsdelivr.net/npm/vue"></script>-->
+
+
+
+    </head>
+
+    <body>
+
+
+    <div id="app">
+        {{ message }} sda
+
+
+
+    </div>
+
+    <div id="playground" v-on:keypress="move('keypress', $event)" v-on:keyup="move('keyup', $event)" v-on:keydown="move('keydown', $event)"  tabindex="0" autofocus>
+
+        <player>ttt</player>
+
+        <div v-for="row in field">
+
+            <div v-for="col in row">
+
+                <tile v-bind:row="col.row" v-bind:col="col.col" v-bind:is-border="isBorder(col.row, col.col)" v-bind:is-block="isBlock(col.row, col.col)"></tile>
+                <!--
+                <div class="tile" v-bind:style="styleTileFunctionObject">
+
+                    {{ col.row }} /
+
+                </div>
+                -->
+
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <script src="./vue-app.js"></script>
+
+    </body>
+
+</html>

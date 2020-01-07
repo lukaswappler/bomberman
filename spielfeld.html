@@ -1,0 +1,97 @@
+<html>
+<head>
+
+<style>
+
+body {
+	
+	background-color: grey;
+}
+
+.tile {
+	width: 32px;
+	height: 15px;
+	background: url('60963.png')  0px -583px;
+	/*background: url('60963.png')  0px -32px;*/
+	float: left;
+	
+	margin-top: -7.5px;
+	position: relative; 
+}
+
+.row.first .tile {	
+	margin-top: 0px;
+}
+
+.row {}
+
+.row {
+	clear:both;
+	white-space: nowrap;
+	width: 1500px;	
+}
+
+.row.odd { 
+	
+	margin-left: 16px;
+	
+}
+
+.wall {
+	top: 0;
+	left:0;
+	position: absolute;
+	overflow: show;
+	width: 32px;
+	height: 15px;
+	background: url('60963.png')  -80px -80px;
+}
+
+</style>
+
+</head>
+
+<body>
+	
+	<div class="row first">
+		<div class="tile"></div>
+		<div class="tile odd"></div>
+		<div class="tile"></div>
+		<div class="tile odd"></div>
+		<div class="tile"></div>
+		<div class="tile odd"></div>
+	</div>
+	
+	<div class="row odd">
+		<div class="tile"></div>
+		<div class="tile odd">
+			<div class="wall"></div>
+		</div>
+		<div class="tile"></div>
+		<div class="tile odd"></div>
+		<div class="tile"></div>
+		<div class="tile odd"></div>
+	</div>
+	
+	<div class="row">
+		<div class="tile"></div>
+		<div class="tile odd"></div>
+		<div class="tile"></div>
+		<div class="tile odd"></div>
+		<div class="tile"></div>
+		<div class="tile odd"></div>
+	</div>
+	
+	<div class="row odd">
+		<div class="tile"></div>
+		<div class="tile odd"></div>
+		<div class="tile"></div>
+		<div class="tile odd"></div>
+		<div class="tile"></div>
+		<div class="tile odd"></div>
+	</div>
+	
+	
+	
+<body>
+</html>
