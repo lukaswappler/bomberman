@@ -6,91 +6,6 @@ var app = new Vue({
 });
 
 
-Vue.component('player', {
-    template: '<div class="player" v-bind:style="styleObject()"></div>',
-
-    data: function() {
-        return {
-            'top': 6,
-            'left': 16
-        };
-    },
-
-    methods: {
-        styleObject: function () {
-
-            background = 'url(\'super_bomberman_players.png\')  -106px -46px';
-
-            return {
-                'image-rendering': 'optimizeSpeed',
-                'image-rendering': '-moz-crisp-edges',
-                'image-rendering': '-o-crisp-edges',
-                'image-rendering': '-webkit-optimize-contrast',
-                'image-rendering': 'pixelated',
-                'image-rendering': 'optimize-contrast',
-                '-ms-interpolation-mode': 'nearest-neighbor',
-
-                position: 'absolute',
-                //background: 'url(\'super_bomberman_tiles.png\')  -277px -461px',
-                //background: 'url(\'super_bomberman_tiles.png\')  -294px -461px',
-                background: background ,
-                height: 26,
-                width: 16,
-                'z-index': 10000,
-                'top': this.top,
-                'left': this.left
-            };
-        }
-    }
-});
-
-
-Vue.component('tile', {
-    props: ['col', 'row', 'isBorder', 'isBlock'],
-    template: '<div v-bind:style="styleObject()"></div>',
-    computed: {
-
-    },
-    methods: {
-        styleObject: function () {
-            const row = this.row;
-            const col = this.col;
-
-            const posLeft = col * 16;
-            const posTop = row * 16;
-
-            var background;
-            if (this.isBorder) {
-                background = 'url(\'super_bomberman_tiles.png\')  -294px -461px';
-            } else if (this.isBlock) {
-                background = 'url(\'super_bomberman_tiles.png\')  -294px -461px';
-            } else {
-                background = 'url(\'super_bomberman_tiles.png\')  -328px -461px';
-            }
-
-            return {
-
-                'image-rendering': 'optimizeSpeed',
-                'image-rendering': '-moz-crisp-edges',
-                'image-rendering': '-o-crisp-edges',
-                'image-rendering': '-webkit-optimize-contrast',
-                'image-rendering': 'pixelated',
-                'image-rendering': 'optimize-contrast',
-                '-ms-interpolation-mode': 'nearest-neighbor',
-
-                'z-index': 100,
-                position: 'absolute',
-                //background: 'url(\'super_bomberman_tiles.png\')  -277px -461px',
-                //background: 'url(\'super_bomberman_tiles.png\')  -294px -461px',
-                background: background ,
-                height: 16,
-                width: 16,
-                'top': posTop,
-                'left': posLeft
-            }
-        }
-    }
-});
 
 var playground = new Vue({
     el: '#playground',
@@ -218,11 +133,10 @@ var playground = new Vue({
             var newFieldCol = Math.ceil((newLeft) / 16);
 
 
-            console.log('top:',  this.player.top - 6 + 16 , this.player.top - 6 + 15 + 16);
-
-            console.log(oldLeft, newLeft);
-            console.log('currentField:' , currentFieldRow, currentFieldCol);
-            console.log('newField:' , newFieldRow1, newFieldRow2, newFieldCol);
+            //console.log('top:',  this.player.top - 6 + 16 , this.player.top - 6 + 15 + 16);
+            //console.log(oldLeft, newLeft);
+            // console.log('currentField:' , currentFieldRow, currentFieldCol);
+            // console.log('newField:' , newFieldRow1, newFieldRow2, newFieldCol);
 
             let newField1 =  this.$children.filter(child => child.$options._componentTag === 'tile' && child.row === newFieldRow1 && child.col === newFieldCol)[0];
             let newField2 =  this.$children.filter(child => child.$options._componentTag === 'tile' && child.row === newFieldRow2 && child.col === newFieldCol)[0];
@@ -250,10 +164,10 @@ var playground = new Vue({
             newLeft--;
 
 
-            console.log('left');
-            console.log(oldLeft, newLeft);
-            console.log('currentField:' , currentFieldRow, currentFieldCol);
-            console.log('newField:' , newFieldRow, newFieldCol);
+            // console.log('left');
+            // console.log(oldLeft, newLeft);
+            // console.log('currentField:' , currentFieldRow, currentFieldCol);
+            // console.log('newField:' , newFieldRow, newFieldCol);
 
 
             let newField1 =  this.$children.filter(child => child.$options._componentTag === 'tile' && child.row === newFieldRow1 && child.col === newFieldCol)[0];
@@ -287,10 +201,10 @@ var playground = new Vue({
 
 
 
-            console.log('up');
-            console.log(oldTop, newTop);
-            console.log('currentField:' , currentFieldRow, currentFieldCol);
-            console.log('newField:' , newFieldRow, newFieldCol_1, newFieldCol_2);
+            // console.log('up');
+            // console.log(oldTop, newTop);
+            // console.log('currentField:' , currentFieldRow, currentFieldCol);
+            // console.log('newField:' , newFieldRow, newFieldCol_1, newFieldCol_2);
 
             let newField1 =  this.$children.filter(child => child.$options._componentTag === 'tile' && child.row === newFieldRow && child.col === newFieldCol_1)[0];
             let newField2 =  this.$children.filter(child => child.$options._componentTag === 'tile' && child.row === newFieldRow && child.col === newFieldCol_2)[0];
@@ -318,10 +232,10 @@ var playground = new Vue({
 
 
 
-            console.log('up');
-            console.log(oldTop, newTop);
-            console.log('currentField:' , currentFieldRow, currentFieldCol);
-            console.log('newField:' , newFieldRow, newFieldCol_1, newFieldCol_2);
+            // console.log('up');
+            // console.log(oldTop, newTop);
+            // console.log('currentField:' , currentFieldRow, currentFieldCol);
+            // console.log('newField:' , newFieldRow, newFieldCol_1, newFieldCol_2);
 
             let newField1 =  this.$children.filter(child => child.$options._componentTag === 'tile' && child.row === newFieldRow && child.col === newFieldCol_1)[0];
             let newField2 =  this.$children.filter(child => child.$options._componentTag === 'tile' && child.row === newFieldRow && child.col === newFieldCol_2)[0];

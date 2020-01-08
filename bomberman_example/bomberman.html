@@ -1,0 +1,298 @@
+<html>
+
+<style>
+
+
+.playground {
+    width: 750px;
+    height: 650px;
+    background-color: #105931;
+}
+
+.cell {
+    width: 50px;
+    height: 50px;
+    background-color: grey;
+    float: right;
+}
+
+.green.cell {
+    background-color: #105931;
+}
+.green.cell.long {
+    background-color: #105931;
+    width: 650px;
+}
+
+.row {
+ width: 750px;
+ height: 50px;
+}
+
+.border.cell {
+    border-top: 2px solid #C6C3C6;
+    border-right: 2px solid #9C9A9C;
+
+    border-left: 2px solid #393839;
+    border-bottom: 2px solid #212021;
+    box-sizing: border-box;
+}
+
+
+.bomber {
+    float:left;
+    margin-left: 100px;
+    width: 50px;
+    height: 50px;
+    position: relative;
+}
+
+.bomber img {
+    position: absolute;
+    bottom: 0px;
+    left: 0;
+}
+
+.bomber-name {
+    padding-left: 20px;
+    float:left;
+    width: 200px;
+    height: 50px;
+
+
+    vertical-align: bottom;
+}
+
+.wins {
+    float: right;
+    width: 50px;
+    height: 50px;
+    margin-right: 50px;
+    text-align: center;
+}
+
+.losses {
+    width: 50px;
+    height: 50px;
+    float: right;
+    margin-right: 100px;
+    text-align: center;
+}
+
+.wins, .losses, .bomber-name {
+    font-size: 35px;
+    font-family:Comic Sans MS,Verdana,Helvetica;
+    color: white;
+
+}
+
+</style>
+
+<body>
+
+<div class="playground">
+
+    <div class="row top-border">
+        <div class="border cell"></div>
+        <div class="border cell"></div>
+        <div class="border cell"></div>
+        <div class="border cell"></div>
+        <div class="border cell"></div>
+        <div class="border cell"></div>
+        <div class="border cell"></div>
+        <div class="border cell"></div>
+        <div class="border cell"></div>
+        <div class="border cell"></div>
+        <div class="border cell"></div>
+        <div class="border cell"></div>
+        <div class="border cell"></div>
+        <div class="border cell"></div>
+        <div class="border cell"></div>
+    </div>
+    <div class="row">
+        <div class="border cell"></div>
+        <div class="green cell long">
+            <div class="losses">L</div>
+            <div class="wins">W</div>
+        </div>
+        <div class="border cell"></div>
+    </div>
+    <div class="row">
+        <div class="border cell"></div>
+        <div class="green cell"></div>
+        <div class="border cell"></div>
+        <div class="green cell"></div>
+        <div class="border cell"></div>
+        <div class="green cell"></div>
+        <div class="border cell"></div>
+        <div class="green cell"></div>
+        <div class="border cell"></div>
+        <div class="green cell"></div>
+        <div class="border cell"></div>
+        <div class="green cell"></div>
+        <div class="border cell"></div>
+        <div class="green cell"></div>
+        <div class="border cell"></div>
+    </div>
+    <div class="row">
+        <div class="border cell"></div>
+        <div class="green cell long">
+            <div class="bomber">
+                <img src="bomber_red_right.png">
+            </div>
+            <div class="bomber-name">
+                Andreas
+            </div>
+
+            <div class="losses">5</div>
+            <div class="wins">10</div>
+
+        </div>
+        <div class="border cell"></div>
+    </div>
+    <div class="row">
+        <div class="border cell"></div>
+        <div class="green cell"></div>
+        <div class="border cell"></div>
+        <div class="green cell"></div>
+        <div class="border cell"></div>
+        <div class="green cell"></div>
+        <div class="border cell"></div>
+        <div class="green cell"></div>
+        <div class="border cell"></div>
+        <div class="green cell"></div>
+        <div class="border cell"></div>
+        <div class="green cell"></div>
+        <div class="border cell"></div>
+        <div class="green cell"></div>
+        <div class="border cell"></div>
+    </div>
+    <div class="row">
+        <div class="border cell"></div>
+        <div class="green cell long">
+            <div class="bomber">
+                <img src="bomber_green_right.png">
+            </div>
+            <div class="bomber-name">
+                Stefan
+            </div>
+
+            <div class="losses">7</div>
+            <div class="wins">8</div>
+
+        </div>
+        <div class="border cell"></div>
+    </div>
+    <div class="row">
+        <div class="border cell"></div>
+        <div class="green cell"></div>
+        <div class="border cell"></div>
+        <div class="green cell"></div>
+        <div class="border cell"></div>
+        <div class="green cell"></div>
+        <div class="border cell"></div>
+        <div class="green cell"></div>
+        <div class="border cell"></div>
+        <div class="green cell"></div>
+        <div class="border cell"></div>
+        <div class="green cell"></div>
+        <div class="border cell"></div>
+        <div class="green cell"></div>
+        <div class="border cell"></div>
+    </div>
+    <div class="row">
+        <div class="border cell"></div>
+        <div class="green cell long">
+            <div class="bomber">
+                <img src="bomber_blue_right.png">
+            </div>
+            <div class="bomber-name">
+                Martin
+            </div>
+
+            <div class="losses">7</div>
+            <div class="wins">8</div>
+
+        </div>
+        <div class="border cell"></div>
+    </div>
+    <div class="row">
+        <div class="border cell"></div>
+        <div class="green cell"></div>
+        <div class="border cell"></div>
+        <div class="green cell"></div>
+        <div class="border cell"></div>
+        <div class="green cell"></div>
+        <div class="border cell"></div>
+        <div class="green cell"></div>
+        <div class="border cell"></div>
+        <div class="green cell"></div>
+        <div class="border cell"></div>
+        <div class="green cell"></div>
+        <div class="border cell"></div>
+        <div class="green cell"></div>
+        <div class="border cell"></div>
+    </div>
+    <div class="row">
+        <div class="border cell"></div>
+        <div class="green cell long">
+            <div class="bomber">
+                <img src="bomber_yellow_right.png">
+            </div>
+            <div class="bomber-name">
+                Simon
+            </div>
+
+            <div class="losses">10</div>
+            <div class="wins">3</div>
+
+        </div>
+        <div class="border cell"></div>
+    </div>
+    <div class="row">
+        <div class="border cell"></div>
+        <div class="green cell"></div>
+        <div class="border cell"></div>
+        <div class="green cell"></div>
+        <div class="border cell"></div>
+        <div class="green cell"></div>
+        <div class="border cell"></div>
+        <div class="green cell"></div>
+        <div class="border cell"></div>
+        <div class="green cell"></div>
+        <div class="border cell"></div>
+        <div class="green cell"></div>
+        <div class="border cell"></div>
+        <div class="green cell"></div>
+        <div class="border cell"></div>
+    </div>
+    <div class="row">
+        <div class="border cell"></div>
+        <div class="green cell long"></div>
+        <div class="border cell"></div>
+    </div>
+
+    <div class="row top-border">
+        <div class="border cell"></div>
+        <div class="border cell"></div>
+        <div class="border cell"></div>
+        <div class="border cell"></div>
+        <div class="border cell"></div>
+        <div class="border cell"></div>
+        <div class="border cell"></div>
+        <div class="border cell"></div>
+        <div class="border cell"></div>
+        <div class="border cell"></div>
+        <div class="border cell"></div>
+        <div class="border cell"></div>
+        <div class="border cell"></div>
+        <div class="border cell"></div>
+        <div class="border cell"></div>
+    </div>
+
+</div>
+
+
+</body>
+
+</html>
