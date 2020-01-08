@@ -63,19 +63,22 @@ Vue.component('player', {
             };
         },
         changeBackground: function(direction) {
+            let backgroundPosition = this.backgroundPositions[direction];
+
             if (this.lastMove === direction) {
                 this.lastMoveCount++;
-                //change img only after 5 moves
+                //change img only after a number of moves
                 if (this.lastMoveCount > this.backgroundChangeFrequency) {
                     this.lastMoveCount = 0;
                     this.last[direction]++;
-                    this.last[direction] = this.last[direction] % 3;
-                    this.backgroundPosition = this.backgroundPositions[direction][this.last[direction]];
+
+                    this.last[direction] = this.last[direction] % backgroundPosition.length;
+                    this.backgroundPosition = backgroundPosition[this.last[direction]];
                 }
 
             } else {
                 this.last[direction] = 0;
-                this.backgroundPosition = this.backgroundPositions[direction][0];
+                this.backgroundPosition = backgroundPosition[0];
             }
 
             this.lastMove = direction;

@@ -19,18 +19,6 @@ var playground = new Vue({
         pixelmap: null,
 
     },
-    computed: {
-        styleTileFunctionObject: function () {
-            return {
-                height: 31,
-                width: 31,
-                'top': calculateLeft(),
-                'left': function() {
-                    return '0px';
-                }
-            }
-        }
-    },
     methods: {
         isBorder: function(row, col) {
 
@@ -69,34 +57,33 @@ var playground = new Vue({
 
         },
     updateGameArea: function () {
-            if (this.player === null) {
-                this.player = this.$children.filter(child => child.$options._componentTag === 'player')[0];
-            }
+        if (this.player === null) {
+            this.player = this.$children.filter(child => child.$options._componentTag === 'player')[0];
+        }
+
+
+        var tileHeight = 16;
+        var tileWidth = 16;
 
 
 
-            var tileHeight = 16;
-            var tileWidth = 16;
+        //myGameArea.clear();
+        // myGamePiece.moveAngle = 0;
+        //myGamePiece.speed = 0;
 
+        var oldTop = this.player.top;
+        var oldLeft = this.player.left;
 
-
-            //myGameArea.clear();
-            // myGamePiece.moveAngle = 0;
-            //myGamePiece.speed = 0;
-
-            var oldTop = this.player.top;
-            var oldLeft = this.player.left;
-
-            var currentFieldRow = Math.ceil((this.player.top + 6 ) / 16) ;
-            var currentFieldCol = Math.ceil((this.player.left) / 16);
+        var currentFieldRow = Math.ceil((this.player.top + 6 ) / 16) ;
+        var currentFieldCol = Math.ceil((this.player.left) / 16);
 
 
 
 
-            var isRight = false;
-            var isDown = false;
-            var isLeft = false;
-            var isUp = false;
+        var isRight = false;
+        var isDown = false;
+        var isLeft = false;
+        var isUp = false;
 
         //left
         if (myGameArea.keys && myGameArea.keys[37]) {
@@ -124,6 +111,14 @@ var playground = new Vue({
 
         var newFieldRow;
         var newFieldCol;
+
+
+        let setNewTop = false;
+        let setNewLeft = false;
+
+        let helpLeft = 0;
+        let helpTop = 0;
+
         if (isRight) {
 
             newLeft++;
@@ -142,19 +137,23 @@ var playground = new Vue({
             let newField2 =  this.$children.filter(child => child.$options._componentTag === 'tile' && child.row === newFieldRow2 && child.col === newFieldCol)[0];
             if (newField1 && !newField1.isBlock && !newField1.isBorder &&
                 newField2 && !newField2.isBlock && !newField2.isBorder) {
-                this.player.left = newLeft;
+                //this.player.left = newLeft;
+                setNewLeft = true;
             } else {
 
                 //TODO
                 if (!newField1.isBlock) {
-                    this.player.top--;
+                    //this.player.top--;
+                    helpTop= -1;
                 }
                 if (!newField2.isBlock) {
-                    this.player.top++;
+                    //this.player.top++;
+                    helpTop= 1;
                 }
 
             }
         }
+
         if (isLeft) {
             var newFieldRow1 = Math.floor((this.player.top - 6 + 16 ) / 16) ;
             var newFieldRow2 = Math.floor((this.player.top - 6 + 15 + 16) / 16) ;
@@ -174,15 +173,19 @@ var playground = new Vue({
             let newField2 =  this.$children.filter(child => child.$options._componentTag === 'tile' && child.row === newFieldRow2 && child.col === newFieldCol)[0];
             if (newField1 && !newField1.isBlock && !newField1.isBorder &&
                 newField2 && !newField2.isBlock && !newField2.isBorder) {
-                this.player.left = newLeft;
+
+                setNewLeft = true;
+                //this.player.left = newLeft;
             } else {
 
                 //TODO
                 if (!newField1.isBlock) {
-                    this.player.top--;
+                    //this.player.top--;
+                    helpTop= -1;
                 }
                 if (!newField2.isBlock) {
-                    this.player.top++;
+                    //this.player.top++;
+                    helpTop= 1;
                 }
 
             }
@@ -210,14 +213,18 @@ var playground = new Vue({
             let newField2 =  this.$children.filter(child => child.$options._componentTag === 'tile' && child.row === newFieldRow && child.col === newFieldCol_2)[0];
             if (newField1 && !newField1.isBlock && !newField1.isBorder &&
                 newField2 && !newField2.isBlock && !newField2.isBorder) {
-                this.player.top = newTop;
+
+                //this.player.top = newTop;
+                setNewTop = true;
             } else {
                 //TODO
                 if (!newField1.isBlock) {
-                    this.player.left--;
+                    //this.player.left--;
+                    helpLeft = -1;
                 }
                 if (!newField2.isBlock) {
-                    this.player.left++;
+                    //this.player.left++;
+                    helpLeft = 1;
                 }
 
             }
@@ -241,23 +248,41 @@ var playground = new Vue({
             let newField2 =  this.$children.filter(child => child.$options._componentTag === 'tile' && child.row === newFieldRow && child.col === newFieldCol_2)[0];
             if (newField1 && !newField1.isBlock && !newField1.isBorder &&
                 newField2 && !newField2.isBlock && !newField2.isBorder) {
-                this.player.top = newTop;
+
+                //this.player.top = newTop;
+                setNewTop = true;
             } else {
 
                 //TODO
                 if (!newField1.isBlock) {
-                    this.player.left--;
+                    //this.player.left--;
+                    helpLeft = -1;
                 }
                 if (!newField2.isBlock) {
-                    this.player.left++;
+                    //this.player.left++;
+                    helpLeft = 1;
                 }
             }
         }
 
+        //set the help, the normal movement can overrule
+        if (helpTop !== 0) {
+            this.player.top = this.player.top + helpTop;
+        }
+        if (helpLeft !== 0) {
+            this.player.left = this.player.left + helpLeft;
+        }
+
+        if (setNewTop) {
+            this.player.top = newTop;
+
+        }
+        if (setNewLeft) {
+            this.player.left = newLeft;
 
         }
 
-
+    }
 },
     created: function () {
         // `this` points to the vm instance
@@ -281,12 +306,6 @@ var playground = new Vue({
 
     }
 });
-
-function calculateLeft() {
-    return 21;
-}
-
-
 
 var myGameArea = {
 
