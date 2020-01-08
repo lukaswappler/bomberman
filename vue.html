@@ -8,50 +8,44 @@
 
         <!--<script src="https://cdn.jsdelivr.net/npm/vue"></script>-->
 
+        <style>
 
+            body {
+                background-color: black;
+            }
+
+            #playground{
+                position: relative;
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+        </style>
 
     </head>
 
     <body>
+        <div id="playground" v-bind:style="styleObject()" v-on:keypress="move('keypress', $event)" v-on:keyup="move('keyup', $event)" v-on:keydown="move('keydown', $event)"  tabindex="0" autofocus>
 
+            <player></player>
 
-    <div id="app">
-        {{ message }} sda
+            <div v-for="row in field">
 
+                <div v-for="col in row">
 
-
-    </div>
-
-    <div id="playground" v-on:keypress="move('keypress', $event)" v-on:keyup="move('keyup', $event)" v-on:keydown="move('keydown', $event)"  tabindex="0" autofocus>
-
-        <player>ttt</player>
-
-        <div v-for="row in field">
-
-            <div v-for="col in row">
-
-                <tile v-bind:row="col.row" v-bind:col="col.col" v-bind:is-border="isBorder(col.row, col.col)" v-bind:is-block="isBlock(col.row, col.col)"></tile>
-                <!--
-                <div class="tile" v-bind:style="styleTileFunctionObject">
-
-                    {{ col.row }} /
-
+                    <tile v-bind:row="col.row" v-bind:col="col.col" v-bind:is-border="isBorder(col.row, col.col)" v-bind:is-block="isBlock(col.row, col.col)"></tile>
                 </div>
-                -->
-
 
             </div>
-
+            <div style="clear:both;"></div>
         </div>
 
-    </div>
+        <!-- components -->
+        <script src="components/player.js"></script>
+        <script src="components/tile.js"></script>
 
-    <!-- components -->
-    <script src="components/player.js"></script>
-    <script src="components/tile.js"></script>
-
-    <!-- app -->
-    <script src="./vue-app.js"></script>
+        <!-- app -->
+        <script src="./vue-app.js"></script>
 
     </body>
 

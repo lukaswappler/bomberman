@@ -1,12 +1,3 @@
-var app = new Vue({
-    el: '#app',
-    data: {
-        message: 'Hello Vue!'
-    }
-});
-
-
-
 var playground = new Vue({
     el: '#playground',
     data: {
@@ -20,6 +11,12 @@ var playground = new Vue({
 
     },
     methods: {
+        styleObject: function () {
+            return {
+                width: this.cols * 16,
+                height: this.rows * 16
+            }
+        },
         isBorder: function(row, col) {
 
 
@@ -56,234 +53,218 @@ var playground = new Vue({
             //player.left += 1;
 
         },
-    updateGameArea: function () {
-        if (this.player === null) {
-            this.player = this.$children.filter(child => child.$options._componentTag === 'player')[0];
-        }
+        updateGameArea: function () {
+            if (this.player === null) {
+                this.player = this.$children.filter(child => child.$options._componentTag === 'player')[0];
+            }
 
 
-        var tileHeight = 16;
-        var tileWidth = 16;
-
-
-
-        //myGameArea.clear();
-        // myGamePiece.moveAngle = 0;
-        //myGamePiece.speed = 0;
-
-        var oldTop = this.player.top;
-        var oldLeft = this.player.left;
-
-        var currentFieldRow = Math.ceil((this.player.top + 6 ) / 16) ;
-        var currentFieldCol = Math.ceil((this.player.left) / 16);
+            var tileHeight = 16;
+            var tileWidth = 16;
 
 
 
+            //myGameArea.clear();
+            // myGamePiece.moveAngle = 0;
+            //myGamePiece.speed = 0;
 
-        var isRight = false;
-        var isDown = false;
-        var isLeft = false;
-        var isUp = false;
+            var oldTop = this.player.top;
+            var oldLeft = this.player.left;
 
-        //left
-        if (myGameArea.keys && myGameArea.keys[37]) {
-            isLeft = true;
-        }
-
-        if (myGameArea.keys && myGameArea.keys[39]) {
-            //right
-            isRight = true;
-        }
-
-        //up
-        if (myGameArea.keys && myGameArea.keys[38]) {
-            isUp = true;
-        }
-
-        //down
-        if (myGameArea.keys && myGameArea.keys[40]) {
-            isDown = true;
-        }
+            var currentFieldRow = Math.ceil((this.player.top + 6 ) / 16) ;
+            var currentFieldCol = Math.ceil((this.player.left) / 16);
 
 
-        var newTop = oldTop;
-        var newLeft = oldLeft;
-
-        var newFieldRow;
-        var newFieldCol;
 
 
-        let setNewTop = false;
-        let setNewLeft = false;
+            var isRight = false;
+            var isDown = false;
+            var isLeft = false;
+            var isUp = false;
 
-        let helpLeft = 0;
-        let helpTop = 0;
+            //left
+            if (myGameArea.keys && myGameArea.keys[37]) {
+                isLeft = true;
+            }
 
-        if (isRight) {
+            if (myGameArea.keys && myGameArea.keys[39]) {
+                //right
+                isRight = true;
+            }
 
-            newLeft++;
+            //up
+            if (myGameArea.keys && myGameArea.keys[38]) {
+                isUp = true;
+            }
 
-            var newFieldRow1 = Math.floor((this.player.top - 6 + 16 ) / 16) ;
-            var newFieldRow2 = Math.floor((this.player.top - 6 + 15 + 16) / 16) ;
-            var newFieldCol = Math.ceil((newLeft) / 16);
+            //down
+            if (myGameArea.keys && myGameArea.keys[40]) {
+                isDown = true;
+            }
 
 
-            //console.log('top:',  this.player.top - 6 + 16 , this.player.top - 6 + 15 + 16);
-            //console.log(oldLeft, newLeft);
-            // console.log('currentField:' , currentFieldRow, currentFieldCol);
-            // console.log('newField:' , newFieldRow1, newFieldRow2, newFieldCol);
+            var newTop = oldTop;
+            var newLeft = oldLeft;
 
-            let newField1 =  this.$children.filter(child => child.$options._componentTag === 'tile' && child.row === newFieldRow1 && child.col === newFieldCol)[0];
-            let newField2 =  this.$children.filter(child => child.$options._componentTag === 'tile' && child.row === newFieldRow2 && child.col === newFieldCol)[0];
-            if (newField1 && !newField1.isBlock && !newField1.isBorder &&
-                newField2 && !newField2.isBlock && !newField2.isBorder) {
-                //this.player.left = newLeft;
-                setNewLeft = true;
-            } else {
+            let setNewTop = false;
+            let setNewLeft = false;
 
-                //TODO
-                if (!newField1.isBlock) {
-                    //this.player.top--;
-                    helpTop= -1;
+            let helpLeft = 0;
+            let helpTop = 0;
+
+            if (isRight) {
+
+                newLeft++;
+
+                let newFieldRow1 = Math.floor((this.player.top - 6 + 16 ) / 16) ;
+                let newFieldRow2 = Math.floor((this.player.top - 6 + 15 + 16) / 16) ;
+                let newFieldCol = Math.ceil((newLeft) / 16);
+
+
+                let newField1 =  this.$children.filter(child => child.$options._componentTag === 'tile' && child.row === newFieldRow1 && child.col === newFieldCol)[0];
+                let newField2 =  this.$children.filter(child => child.$options._componentTag === 'tile' && child.row === newFieldRow2 && child.col === newFieldCol)[0];
+                if (newField1 && !newField1.isBlock && !newField1.isBorder &&
+                    newField2 && !newField2.isBlock && !newField2.isBorder) {
+                    //this.player.left = newLeft;
+                    setNewLeft = true;
+                } else {
+
+                    //TODO
+                    if (!newField1.isBlock) {
+                        //this.player.top--;
+                        helpTop= -1;
+                    }
+                    if (!newField2.isBlock) {
+                        //this.player.top++;
+                        helpTop= 1;
+                    }
+
                 }
-                if (!newField2.isBlock) {
-                    //this.player.top++;
-                    helpTop= 1;
+            }
+
+            if (isLeft) {
+                let newFieldRow1 = Math.floor((this.player.top - 6 + 16 ) / 16) ;
+                let newFieldRow2 = Math.floor((this.player.top - 6 + 15 + 16) / 16) ;
+
+                let newFieldCol = Math.ceil(((newLeft) - 16 ) / 16);
+
+                newLeft--;
+
+
+                let newField1 =  this.$children.filter(child => child.$options._componentTag === 'tile' && child.row === newFieldRow1 && child.col === newFieldCol)[0];
+                let newField2 =  this.$children.filter(child => child.$options._componentTag === 'tile' && child.row === newFieldRow2 && child.col === newFieldCol)[0];
+                if (newField1 && !newField1.isBlock && !newField1.isBorder &&
+                    newField2 && !newField2.isBlock && !newField2.isBorder) {
+
+                    setNewLeft = true;
+                    //this.player.left = newLeft;
+                } else {
+
+                    //TODO
+                    if (!newField1.isBlock) {
+                        //this.player.top--;
+                        helpTop= -1;
+                    }
+                    if (!newField2.isBlock) {
+                        //this.player.top++;
+                        helpTop= 1;
+                    }
+
                 }
+            }
+
+            if (isDown) {
+
+                newTop++;
+
+                let newFieldRow = Math.ceil((newTop + 10 ) / 16) ;
+                let colPosition1 = (newLeft) - 15;
+                let colPosition2 = (newLeft);
+                let newFieldCol_1 = Math.ceil((colPosition1 ) / 16);
+                let newFieldCol_2 = Math.ceil(((colPosition2) ) / 16);
+
+
+
+
+                // console.log('up');
+                // console.log(oldTop, newTop);
+                // console.log('currentField:' , currentFieldRow, currentFieldCol);
+                // console.log('newField:' , newFieldRow, newFieldCol_1, newFieldCol_2);
+
+                let newField1 =  this.$children.filter(child => child.$options._componentTag === 'tile' && child.row === newFieldRow && child.col === newFieldCol_1)[0];
+                let newField2 =  this.$children.filter(child => child.$options._componentTag === 'tile' && child.row === newFieldRow && child.col === newFieldCol_2)[0];
+                if (newField1 && !newField1.isBlock && !newField1.isBorder &&
+                    newField2 && !newField2.isBlock && !newField2.isBorder) {
+
+                    //this.player.top = newTop;
+                    setNewTop = true;
+                } else {
+                    //TODO
+                    if (!newField1.isBlock) {
+                        //this.player.left--;
+                        helpLeft = -1;
+                    }
+                    if (!newField2.isBlock) {
+                        //this.player.left++;
+                        helpLeft = 1;
+                    }
+
+                }
+            }
+
+            if (isUp) {
+                newTop--;
+
+                let newFieldRow = Math.ceil((this.player.top - 6 ) / 16) ;
+                let newFieldCol_1 = Math.ceil(((newLeft) - 15 ) / 16);
+                let newFieldCol_2 = Math.ceil(((newLeft) ) / 16);
+
+
+
+                // console.log('up');
+                // console.log(oldTop, newTop);
+                // console.log('currentField:' , currentFieldRow, currentFieldCol);
+                // console.log('newField:' , newFieldRow, newFieldCol_1, newFieldCol_2);
+
+                let newField1 =  this.$children.filter(child => child.$options._componentTag === 'tile' && child.row === newFieldRow && child.col === newFieldCol_1)[0];
+                let newField2 =  this.$children.filter(child => child.$options._componentTag === 'tile' && child.row === newFieldRow && child.col === newFieldCol_2)[0];
+                if (newField1 && !newField1.isBlock && !newField1.isBorder &&
+                    newField2 && !newField2.isBlock && !newField2.isBorder) {
+
+                    //this.player.top = newTop;
+                    setNewTop = true;
+                } else {
+
+                    //TODO
+                    if (!newField1.isBlock) {
+                        //this.player.left--;
+                        helpLeft = -1;
+                    }
+                    if (!newField2.isBlock) {
+                        //this.player.left++;
+                        helpLeft = 1;
+                    }
+                }
+            }
+
+            //set the help, the normal movement can overrule
+            if (helpTop !== 0) {
+                this.player.top = this.player.top + helpTop;
+            }
+            if (helpLeft !== 0) {
+                this.player.left = this.player.left + helpLeft;
+            }
+
+            if (setNewTop) {
+                this.player.top = newTop;
+
+            }
+            if (setNewLeft) {
+                this.player.left = newLeft;
 
             }
         }
-
-        if (isLeft) {
-            var newFieldRow1 = Math.floor((this.player.top - 6 + 16 ) / 16) ;
-            var newFieldRow2 = Math.floor((this.player.top - 6 + 15 + 16) / 16) ;
-
-            var newFieldCol = Math.ceil(((newLeft) - 16 ) / 16);
-
-            newLeft--;
-
-
-            // console.log('left');
-            // console.log(oldLeft, newLeft);
-            // console.log('currentField:' , currentFieldRow, currentFieldCol);
-            // console.log('newField:' , newFieldRow, newFieldCol);
-
-
-            let newField1 =  this.$children.filter(child => child.$options._componentTag === 'tile' && child.row === newFieldRow1 && child.col === newFieldCol)[0];
-            let newField2 =  this.$children.filter(child => child.$options._componentTag === 'tile' && child.row === newFieldRow2 && child.col === newFieldCol)[0];
-            if (newField1 && !newField1.isBlock && !newField1.isBorder &&
-                newField2 && !newField2.isBlock && !newField2.isBorder) {
-
-                setNewLeft = true;
-                //this.player.left = newLeft;
-            } else {
-
-                //TODO
-                if (!newField1.isBlock) {
-                    //this.player.top--;
-                    helpTop= -1;
-                }
-                if (!newField2.isBlock) {
-                    //this.player.top++;
-                    helpTop= 1;
-                }
-
-            }
-        }
-
-        if (isDown) {
-
-            newTop++;
-
-            var newFieldRow = Math.ceil((newTop + 10 ) / 16) ;
-            let colPosition1 = (newLeft) - 15;
-            let colPosition2 = (newLeft);
-            var newFieldCol_1 = Math.ceil((colPosition1 ) / 16);
-            var newFieldCol_2 = Math.ceil(((colPosition2) ) / 16);
-
-
-
-
-            // console.log('up');
-            // console.log(oldTop, newTop);
-            // console.log('currentField:' , currentFieldRow, currentFieldCol);
-            // console.log('newField:' , newFieldRow, newFieldCol_1, newFieldCol_2);
-
-            let newField1 =  this.$children.filter(child => child.$options._componentTag === 'tile' && child.row === newFieldRow && child.col === newFieldCol_1)[0];
-            let newField2 =  this.$children.filter(child => child.$options._componentTag === 'tile' && child.row === newFieldRow && child.col === newFieldCol_2)[0];
-            if (newField1 && !newField1.isBlock && !newField1.isBorder &&
-                newField2 && !newField2.isBlock && !newField2.isBorder) {
-
-                //this.player.top = newTop;
-                setNewTop = true;
-            } else {
-                //TODO
-                if (!newField1.isBlock) {
-                    //this.player.left--;
-                    helpLeft = -1;
-                }
-                if (!newField2.isBlock) {
-                    //this.player.left++;
-                    helpLeft = 1;
-                }
-
-            }
-        }
-
-        if (isUp) {
-            newTop--;
-
-            var newFieldRow = Math.ceil((this.player.top - 6 ) / 16) ;
-            var newFieldCol_1 = Math.ceil(((newLeft) - 15 ) / 16);
-            var newFieldCol_2 = Math.ceil(((newLeft) ) / 16);
-
-
-
-            // console.log('up');
-            // console.log(oldTop, newTop);
-            // console.log('currentField:' , currentFieldRow, currentFieldCol);
-            // console.log('newField:' , newFieldRow, newFieldCol_1, newFieldCol_2);
-
-            let newField1 =  this.$children.filter(child => child.$options._componentTag === 'tile' && child.row === newFieldRow && child.col === newFieldCol_1)[0];
-            let newField2 =  this.$children.filter(child => child.$options._componentTag === 'tile' && child.row === newFieldRow && child.col === newFieldCol_2)[0];
-            if (newField1 && !newField1.isBlock && !newField1.isBorder &&
-                newField2 && !newField2.isBlock && !newField2.isBorder) {
-
-                //this.player.top = newTop;
-                setNewTop = true;
-            } else {
-
-                //TODO
-                if (!newField1.isBlock) {
-                    //this.player.left--;
-                    helpLeft = -1;
-                }
-                if (!newField2.isBlock) {
-                    //this.player.left++;
-                    helpLeft = 1;
-                }
-            }
-        }
-
-        //set the help, the normal movement can overrule
-        if (helpTop !== 0) {
-            this.player.top = this.player.top + helpTop;
-        }
-        if (helpLeft !== 0) {
-            this.player.left = this.player.left + helpLeft;
-        }
-
-        if (setNewTop) {
-            this.player.top = newTop;
-
-        }
-        if (setNewLeft) {
-            this.player.left = newLeft;
-
-        }
-
-    }
-},
+    },
     created: function () {
         // `this` points to the vm instance
         this.field = [];
