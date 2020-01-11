@@ -8,6 +8,9 @@ var playground = new Vue({
         message2: 'field',
         player: null,
         pixelmap: null,
+        keyboard: {
+            keys: {}
+        }
 
     },
     methods: {
@@ -40,17 +43,48 @@ var playground = new Vue({
             let player = this.$children.filter(child => child.$options._componentTag === 'player')[0];
 
 
-            if (eventType ==='keydown') {
+            if (event.keyCode >= 37 && event.keyCode >= 40) {
                 event.preventDefault();
-                myGameArea.keys = (myGameArea.keys || []);
-                myGameArea.keys[event.keyCode] = (event.type == "keydown");
+            }
+
+            if (eventType ==='keydown') {
+                this.keyboard.keys = (this.keyboard.keys || []);
+                this.keyboard.keys[event.keyCode] = (event.type == "keydown");
             }
             if (eventType ==='keyup') {
-                myGameArea.keys[event.keyCode] = (event.type == "keydown");
+                this.keyboard.keys[event.keyCode] = (event.type == "keydown");
             }
 
             //player.top += 1;
             //player.left += 1;
+
+        },
+        dropBomb: function(event) {
+
+              //space pressed (32)
+              if (event.keyCode === 32) {
+                  event.preventDefault();
+
+
+                  if (this.player === null) {
+                      this.player = this.$children.filter(child => child.$options._componentTag === 'player')[0];
+                  }
+
+                  var currentFieldRow = Math.ceil((this.player.top + 6 ) / 16) ;
+                  var currentFieldCol = Math.ceil((this.player.left) / 16);
+
+                  let currentField =  this.$children.filter(child => child.$options._componentTag === 'tile' && child.row === currentFieldRow && child.col === currentFieldCol)[0];
+
+                  //drop bomb
+                  console.log(currentFieldRow, currentFieldCol, currentField);
+                  console.log(currentField);
+
+                  currentField.$emit('dropBombEvent', 'doIt');
+
+                  //currentField.$root.dropBomb();
+                  //currentField.addBomb();
+
+              }
 
         },
         updateGameArea: function () {
@@ -64,7 +98,6 @@ var playground = new Vue({
 
 
 
-            //myGameArea.clear();
             // myGamePiece.moveAngle = 0;
             //myGamePiece.speed = 0;
 
@@ -83,22 +116,22 @@ var playground = new Vue({
             var isUp = false;
 
             //left
-            if (myGameArea.keys && myGameArea.keys[37]) {
+            if (this.keyboard.keys && this.keyboard.keys[37]) {
                 isLeft = true;
             }
 
-            if (myGameArea.keys && myGameArea.keys[39]) {
+            if (this.keyboard.keys && this.keyboard.keys[39]) {
                 //right
                 isRight = true;
             }
 
             //up
-            if (myGameArea.keys && myGameArea.keys[38]) {
+            if (this.keyboard.keys && this.keyboard.keys[38]) {
                 isUp = true;
             }
 
             //down
-            if (myGameArea.keys && myGameArea.keys[40]) {
+            if (this.keyboard.keys && this.keyboard.keys[40]) {
                 isDown = true;
             }
 
@@ -220,12 +253,6 @@ var playground = new Vue({
                 let newFieldCol_2 = Math.ceil(((newLeft) ) / 16);
 
 
-
-                // console.log('up');
-                // console.log(oldTop, newTop);
-                // console.log('currentField:' , currentFieldRow, currentFieldCol);
-                // console.log('newField:' , newFieldRow, newFieldCol_1, newFieldCol_2);
-
                 let newField1 =  this.$children.filter(child => child.$options._componentTag === 'tile' && child.row === newFieldRow && child.col === newFieldCol_1)[0];
                 let newField2 =  this.$children.filter(child => child.$options._componentTag === 'tile' && child.row === newFieldRow && child.col === newFieldCol_2)[0];
                 if (newField1 && !newField1.isBlock && !newField1.isBorder &&
@@ -279,15 +306,25 @@ var playground = new Vue({
             }
         }
 
-
         setInterval(this.updateGameArea, 20);
 
     },
     mounted: function () {
 
+        console.log('area mounted');
+
+        window.addEventListener("keypress", function(e) {
+            this.move('keypress', e);
+        }.bind(this));
+
+        window.addEventListener("keyup", function(e) {
+            this.move('keyup', e);
+        }.bind(this));
+
+        window.addEventListener("keydown", function(e) {
+            this.move('keydown', e);
+            this.dropBomb(e);
+        }.bind(this));
+
     }
 });
-
-var myGameArea = {
-
-};

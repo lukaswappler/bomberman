@@ -41,6 +41,28 @@ Vue.component('tile', {
                 'top': posTop,
                 'left': posLeft
             }
+        },
+        addBomb: function() {
+            console.log('addBomb');
+            console.log(this.$el);
+
+
+            let bomb = Vue.extend(Bomb);
+            let instance = new bomb();
+            instance.$mount();
+
+            this.$el.appendChild(instance.$el);
+
+            //new Bomb();
         }
+
+    },
+    created: function() {
+        console.log('tile created');
+    },
+    mounted: function () {
+        console.log('tile mounted');
+        this.$on('dropBombEvent', this.addBomb);
+
     }
 });

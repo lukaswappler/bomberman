@@ -5,9 +5,6 @@
 
         <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 
-
-        <!--<script src="https://cdn.jsdelivr.net/npm/vue"></script>-->
-
         <style>
 
             body {
@@ -25,7 +22,7 @@
     </head>
 
     <body>
-        <div id="playground" v-bind:style="styleObject()" v-on:keypress="move('keypress', $event)" v-on:keyup="move('keyup', $event)" v-on:keydown="move('keydown', $event)"  tabindex="0" autofocus>
+        <div id="playground" v-bind:style="styleObject()">
 
             <player></player>
 
@@ -43,6 +40,7 @@
         <!-- components -->
         <script src="components/player.js"></script>
         <script src="components/tile.js"></script>
+        <script src="components/bomb.js"></script>
 
         <!-- app -->
         <script src="./vue-app.js"></script>
