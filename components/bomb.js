@@ -26,7 +26,6 @@ const Bomb = Vue.component('bomb', {
             const col = this.col;
 
             return {
-
                 'image-rendering': 'optimizeSpeed',
                 'image-rendering': '-moz-crisp-edges',
                 'image-rendering': '-o-crisp-edges',
@@ -45,42 +44,17 @@ const Bomb = Vue.component('bomb', {
             this.backgroundPositionPointer = this.backgroundPositionPointer + 1;
             this.backgroundPositionPointer = this.backgroundPositionPointer % this.backgroundPositions.length;
 
-            console.log(this.backgroundPositionPointer);
-            console.log(this.backgroundPositions[this.backgroundPositionPointer]);
-            self.backgroundPosition = this.backgroundPositions[this.backgroundPositionPointer];
             this.backgroundPosition = this.backgroundPositions[this.backgroundPositionPointer];
-
-            this.width = this.width++;
-
-            console.log(this);
-
-            console.log('bomb-tick');
-        },
-        startInterval: function () {
-            setInterval(() => {
-                this.changeBackground();
-            }, this.bombTickRate);
         }
     },
     created: function() {
         console.log('bomb created');
-        /*
-        let self = this;
-
-        setInterval(function() {
-
-            this.changeBackground();
-
-
-        }.bind(this),this.bombTickRate);
-        */
-
-
-
     },
     mounted: function () {
         console.log('bomb mounted');
 
-        this.startInterval();
+        setInterval(() => {
+            this.changeBackground();
+        }, this.bombTickRate);
     }
 });

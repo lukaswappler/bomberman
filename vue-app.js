@@ -40,10 +40,8 @@ var playground = new Vue({
         },
         move: function(eventType, event) {
 
-            let player = this.$children.filter(child => child.$options._componentTag === 'player')[0];
-
-
-            if (event.keyCode >= 37 && event.keyCode >= 40) {
+            //arrow keys
+            if (event.keyCode >= 37 && event.keyCode <= 40) {
                 event.preventDefault();
             }
 
@@ -54,10 +52,6 @@ var playground = new Vue({
             if (eventType ==='keyup') {
                 this.keyboard.keys[event.keyCode] = (event.type == "keydown");
             }
-
-            //player.top += 1;
-            //player.left += 1;
-
         },
         dropBomb: function(event) {
 
@@ -70,20 +64,13 @@ var playground = new Vue({
                       this.player = this.$children.filter(child => child.$options._componentTag === 'player')[0];
                   }
 
-                  var currentFieldRow = Math.ceil((this.player.top + 6 ) / 16) ;
-                  var currentFieldCol = Math.ceil((this.player.left) / 16);
+                  let currentFieldRow = Math.ceil((this.player.top + 6 ) / 16) ;
+                  let currentFieldCol = Math.ceil((this.player.left) / 16);
 
                   let currentField =  this.$children.filter(child => child.$options._componentTag === 'tile' && child.row === currentFieldRow && child.col === currentFieldCol)[0];
 
                   //drop bomb
-                  console.log(currentFieldRow, currentFieldCol, currentField);
-                  console.log(currentField);
-
                   currentField.$emit('dropBombEvent', 'doIt');
-
-                  //currentField.$root.dropBomb();
-                  //currentField.addBomb();
-
               }
 
         },
