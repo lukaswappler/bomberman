@@ -49,11 +49,35 @@ Vue.component('tile', {
 
             let bomb = Vue.extend(Bomb);
             let instance = new bomb();
+
+            instance.row = this.row;
+            instance.col = this.col;
+            instance.playground = this.$root;
+
             instance.$mount();
 
             this.$el.appendChild(instance.$el);
+        },
+        addExplosion: function(explosionType) {
 
-            //new Bomb();
+            //no explosion on solid things
+            if (this.isBlock || this.isBorder) {
+                return;
+            }
+
+            console.log('addExplosion');
+
+            let boom = Vue.extend(BombExplosion);
+            let instance = new boom();
+
+            instance.explosionType = explosionType;
+            instance.row = this.row;
+            instance.col = this.col;
+            instance.playground = this.$root;
+
+            instance.$mount();
+
+            this.$el.appendChild(instance.$el);
         }
 
     },
@@ -63,6 +87,7 @@ Vue.component('tile', {
     mounted: function () {
         console.log('tile mounted');
         this.$on('dropBombEvent', this.addBomb);
+        this.$on('bombExplosion', this.addExplosion);
 
     }
 });
