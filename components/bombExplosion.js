@@ -22,9 +22,9 @@ const BombExplosion = Vue.component('bombExplosion', {
                     '-345px -529px'
                 ],
                 't': [
-                     '-396px -478px',
-                    '-396px -495px',
                     '-379px -495px',
+                    '-396px -478px',
+                    '-396px -495px',
                     '-362px -495px',
                     '-345px -495px'
                 ],
@@ -56,14 +56,6 @@ const BombExplosion = Vue.component('bombExplosion', {
         styleObject: function () {
 
             return {
-                'image-rendering': 'optimizeSpeed',
-                'image-rendering': '-moz-crisp-edges',
-                'image-rendering': '-o-crisp-edges',
-                'image-rendering': '-webkit-optimize-contrast',
-                'image-rendering': 'pixelated',
-                'image-rendering': 'optimize-contrast',
-                '-ms-interpolation-mode': 'nearest-neighbor',
-
                 'background-image': this.backgroundImage,
                 'background-position': this.backgroundPosition,
                 height: this.height,
@@ -71,15 +63,9 @@ const BombExplosion = Vue.component('bombExplosion', {
             }
         },
         changeBackground: function() {
-            console.log('explosion:  changeBackground');
-
-
             this.backgroundPosition = this.backgroundPositions[this.explosionType][this.backgroundPositionPointer];
 
             this.backgroundPositionPointer = this.backgroundPositionPointer + 1;
-            //this.backgroundPositionPointer = this.backgroundPositionPointer % this.backgroundExplodePositions.length;
-
-            console.log('animate');
 
             //animation end
             //destroy explsoion element itself
@@ -95,16 +81,14 @@ const BombExplosion = Vue.component('bombExplosion', {
         }
     },
     created: function() {
-        console.log('explosion created');
     },
     mounted: function () {
-        console.log('explosion mounted');
-
         this.backgroundPosition = this.backgroundPositions[this.explosionType][this.backgroundPositionPointer];
 
         this.tickBackgroundInterval = setInterval(() => {
             this.changeBackground();
         }, this.bombExplodeRate);
+
 
     }
 });
