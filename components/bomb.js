@@ -8,7 +8,7 @@ const Bomb = Vue.component('bomb', {
         return {
             'width': 16,
             'height': 16,
-            'bombRadius': 1,
+            'bombRadius': 3,
             'bombTickRate': 200,
             'bombExplodeRate': 100,
             'bombExplosionTimer': 2000,
@@ -113,25 +113,38 @@ const Bomb = Vue.component('bomb', {
 
             //trigger explosion
             if (this.playground) {
-                let center = this.playground.$children.filter(child => child.$options._componentTag === 'tile' && child.row === this.row  && child.col ===this.col)[0];
-                let top = this.playground.$children.filter(child => child.$options._componentTag === 'tile' && child.row === this.row - 1 && child.col ===this.col)[0];
-                let down = this.playground.$children.filter(child => child.$options._componentTag === 'tile' && child.row === this.row + 1&& child.col ===this.col)[0];
-                let left = this.playground.$children.filter(child => child.$options._componentTag === 'tile' && child.row === this.row && child.col ===this.col - 1)[0];
-                let right = this.playground.$children.filter(child => child.$options._componentTag === 'tile' && child.row === this.row && child.col ===this.col + 1)[0];
 
-                center.$emit('bombExplosion', 'c');
-                top.$emit('bombExplosion', 't');
-                down.$emit('bombExplosion', 'd');
-                left.$emit('bombExplosion', 'l');
-                right.$emit('bombExplosion', 'r');
+                for (var i = 1; i <= this.bombRadius; i++) {
+                    let center = this.playground.$children.filter(child => child.$options._componentTag === 'tile' && child.row === this.row  && child.col ===this.col)[0];
 
-                console.log(top, down, left, right, center);
+                    console.log('XX: ', i);
+
+                    let top = this.playground.$children.filter(child => child.$options._componentTag === 'tile' && child.row === this.row - i && child.col ===this.col)[0];
+                    let down = this.playground.$children.filter(child => child.$options._componentTag === 'tile' && child.row === this.row + i && child.col ===this.col)[0];
+                    let left = this.playground.$children.filter(child => child.$options._componentTag === 'tile' && child.row === this.row && child.col ===this.col - i)[0];
+                    let right = this.playground.$children.filter(child => child.$options._componentTag === 'tile' && child.row === this.row && child.col ===this.col + i)[0];
+
+                    center.$emit('bombExplosion','c');
+                    if (top) {
+                        top.$emit('bombExplosion',  (i === this.bombRadius ? 't' : 'tt'));
+                    }
+
+                    if (down) {
+                        down.$emit('bombExplosion',  (i === this.bombRadius ? 'd' : 'dd'));
+                    }
+
+                    if (left) {
+                        left.$emit('bombExplosion',  (i === this.bombRadius ? 'l' : 'll'));
+                    }
+                    if (right) {
+                        right.$emit('bombExplosion',  (i === this.bombRadius ? 'r' : 'rr'));
+                    }
+                }
 
                 this.$destroy();
 
                 //// remove the element from the DOM
                 this.$el.parentNode.removeChild(this.$el);
-
             }
 
             //explode

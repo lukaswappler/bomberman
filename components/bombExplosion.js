@@ -8,7 +8,7 @@ const BombExplosion = Vue.component('bombExplosion', {
         return {
             'width': 16,
             'height': 16,
-            'bombExplodeRate': 50,
+            'bombExplodeRate': 500,
             'tickBackgroundInterval': null,
             'backgroundImage': 'url(\'super_bomberman_tiles.png\')',
             'backgroundPositionPointer': 0,
@@ -48,6 +48,34 @@ const BombExplosion = Vue.component('bombExplosion', {
                     '-294px -546px',
                     '-328px -512px',
                     '-328px -529px'
+                ],
+                'tt': [
+                    '-379px -495px',
+                    '-396px -478px',
+                    '-396px -495px',
+                    '-362px -495px',
+                    '-345px -495px'
+                ],
+                'dd': [
+                    '-362px -546px',
+                    '-379px -546px',
+                    '-396px -546px',
+                    '-345px -546px',
+                    '-328px -495px'
+                ],
+                'll': [
+                    '-345px -478px',
+                    '-328px -478px',
+                    '-311px -478px',
+                    '-294px -478px',
+                    '-277px -478px'
+                ],
+                'rr': [
+                    '-277px -512px',
+                    '-277px -529px',
+                    '-277px -546px',
+                    '-311px -512px',
+                    '-311px -529px'
                 ],
             }
         }
