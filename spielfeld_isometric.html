@@ -14,15 +14,19 @@ div {
     image-rendering: pixelated;
     image-rendering: optimize-contrast;      
     -ms-interpolation-mode: nearest-neighbor;
+
 }
+
 
 .tile {	
 	background: url('60963.png')  0px -583px;
 	background: url('60963_trans.png')  0px -32px;
 	position: absolute;
-	
-	
-	
+}
+
+.ground-house {
+	background: url('60963_trans.png')  -99px -114px;
+	position: absolute;
 }
 
 .rightWall {
@@ -31,8 +35,32 @@ div {
 	z-index: 1000;
 }
 
+.rightWall-window {
+	background: url('60963_trans.png')  -165px -49px;
+	position: absolute;
+	z-index: 1000;
+}
+
 .leftWall {
 	background: url('60963_trans.png')  -80px -49px;
+	position: absolute;
+	z-index: 1000;
+}
+
+.leftWall-door {
+	background: url('60963_trans.png')  -80px -90px;
+	position: absolute;
+	z-index: 1000;
+}
+
+.leftWall-window {
+	background: url('60963_trans.png')  -146px -49px;
+	position: absolute;
+	z-index: 1000;
+}
+
+.wall-corner {
+	background: url('60963_trans.png')  -212px -48px;
 	position: absolute;
 	z-index: 1000;
 }
@@ -68,7 +96,7 @@ body {
 	var tileWidth = 32;
 	var tileHeight = 15;
 	
-	var rightWallWidth = 32;
+	var rightWallWidth = 18;
 	var rightWallHeight = 32;
 
 	var leftWallWidth = 18;
@@ -77,11 +105,9 @@ body {
 	var fieldCols = 10;
 	var fieldRows = 10;
 	
-	var fieldTopAdjustment = 8;
-	var fieldLeftAdjustment = 16;
-		
-	var wallHeightAdjustment = rightWallHeight - tileHeight;
-	var wallWidthAdjustment = tileWidth/2;
+	var fieldBottomAdjustment = 8 ;
+	var fieldLeftAdjustment = 16 ;
+
 
 	$( document ).ready(function() {
 		console.log('start');		
@@ -95,60 +121,109 @@ body {
 				div.css('width', tileWidth);
 				div.css('height', tileHeight);
 				
-				div.css('top', 101 + ((row) - (col)) * fieldTopAdjustment);
-				div.css('left', 0 + ((col ) + (row )) * fieldLeftAdjustment); 
+				div.css('bottom', ((row) - (col)) * fieldBottomAdjustment);
+				div.css('left', ((col ) + (row )) * fieldLeftAdjustment);
 				body.append(div);
 			}	
 		
 		}
 		
 		var zindex = 1000;
-		
-		paintRightWall(4, 6);
-		
-		paintRightWall(9, 6);
-		
-		paintLeftWall(9, 6);
-		
-	
-		
-		
-		function paintRightWall(wallRow, numberOfTiles) {
-			
-			for (wallCol = 2; wallCol < numberOfTiles; wallCol++) {
-			var wall = $('<div class="rightWall"></div>');
-			
+
+
+
+        paintHouseGround(3,8)
+
+        paintLeftWall(3, 7);
+        paintLeftWall(4, 7);
+        paintLeftWall(5, 7);
+        paintLeftWall(6, 7);
+        paintLeftWall(7, 7);
+
+        paintRightWall(7, 6);
+        paintRightWall(7, 5);
+        paintRightWall(7, 4);
+        paintRightWall(7, 3);
+        paintRightWall(7, 2);
+
+        paintRightWall(2, 6);
+        paintRightWall(2, 5, '-window');
+        paintRightWall(2, 4);
+        paintRightWall(2, 3, '-window');
+        paintRightWall(2, 2);
+
+        paintLeftWall(3, 2);
+        paintLeftWall(4, 2, '-window');
+        paintLeftWall(5, 2, '-door');
+        paintLeftWall(6, 2, '-window');
+        paintLeftWall(7, 2);
+
+
+
+        paintCorner(7,2);
+
+        function paintHouseGround(startingRowCol, endingRowCol) {
+            for(var row = startingRowCol-1; row < endingRowCol-1; row++ ){
+                for(var col = startingRowCol; col < endingRowCol; col++ ){
+                    var div = $('<div class="ground-house" data-row="'+row+'" data-col="'+col+'"></div>');
+
+                    div.css('width', tileWidth);
+                    div.css('height', tileHeight);
+
+                    div.css('bottom', ((row) - (col)) * fieldBottomAdjustment);
+                    div.css('left', ((col ) + (row )) * fieldLeftAdjustment);
+                    body.append(div);
+                }
+
+            }
+        }
+
+		function paintRightWall(paintCol, paintRow, cssModifier = '') {
+
+			var wall = $('<div class="rightWall'+cssModifier+'"></div>');
+
 			wall.css('width', rightWallWidth);
 			wall.css('height', rightWallHeight);
-			
-			
-			wall.css('top', 100 - wallHeightAdjustment + (wallRow - wallCol) * fieldTopAdjustment);
-			wall.css('left', 0 + wallWidthAdjustment + (wallRow + wallCol) * fieldLeftAdjustment); 
-			
-			wall.css('z-index', --zindex);
-			
+
+			wall.css('bottom',  (paintRow - paintCol) * fieldBottomAdjustment);
+			wall.css('left',  14 + (paintRow + paintCol) * fieldLeftAdjustment);
+
+			wall.css('z-index', ++zindex);
+
 			body.append(wall);
-			}
+
 		}
-		
-		
-		function paintLeftWall(wallCol, numberOfTiles) {
-			
-			for (wallRow = 2; wallRow < numberOfTiles; wallRow++) {
-			var wall = $('<div class="leftWall"></div>');
-			
+
+        function paintLeftWall(paintCol, paintRow, cssModifier = '') {
+			var wall = $('<div class="leftWall'+cssModifier+'"></div>');
+
 			wall.css('width', leftWallWidth);
 			wall.css('height', leftWallHeight);
-			
-			
-			wall.css('top', 100 - wallHeightAdjustment + (wallRow - wallCol) * fieldTopAdjustment);
-			wall.css('left', 0 + wallWidthAdjustment + (wallCol + wallRow) * fieldLeftAdjustment); 
-			
-			wall.css('z-index', --zindex);
-			
+
+
+			wall.css('bottom', (paintRow - paintCol) * fieldBottomAdjustment);
+			wall.css('left',(paintCol + paintRow) * fieldLeftAdjustment);
+
+			wall.css('z-index', ++zindex);
+
 			body.append(wall);
-			}
-		}
+        }
+
+        function paintCorner(paintCol, paintRow) {
+            var wall = $('<div class="wall-corner"></div>');
+
+            wall.css('width', 4);
+            wall.css('height', 25);
+
+
+            wall.css('bottom', (paintRow - paintCol) * fieldBottomAdjustment + 1);
+            wall.css('left',(paintCol + paintRow) * fieldLeftAdjustment +14 );
+
+            wall.css('z-index', ++zindex);
+
+            body.append(wall);
+        }
+
 	});	
 	
 	
