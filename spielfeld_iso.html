@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<title>Test</title>
+
+		<style>
+
+			.tile {
+				background: url('60963.png')  0px -583px;
+				background: url('60963_trans.png')  0px -32px;
+
+				background-color: black;
+
+				position: absolute;
+				width: 32px;
+				height: 32px;
+
+				/*transform: skew(0deg, -45deg) scale(1, 1.16);*/
+				transform: rotate(45deg) scale(1.0);
+			}
+
+		</style>
+
+	</head>
+	<body>
+
+		<div>Neu</div>
+		<body>
+
+
+
+			<div class="tile">
+
+			</div>
+
+			<div style="width:100%;text-align:center;">
+				<canvas id="mycanvas" width="970" height="500" style="border:1px solid #aaa;">
+				</canvas>
+			</div>
+
+			<script language="JavaScript">
+
+                var obj=document.getElementById("mycanvas");
+                var ctx=obj.getContext("2d");
+                var loopx,loopy;
+                var a,b,c,d,e,f,g;
+                var angle = (Math.PI)/4; // 45 Grad
+                var alpha = 0.9557;
+
+                var scaling = 1;
+                var verschiebungx = 0;
+                var verschiebungy = 150;
+
+                var cs = Math.cos(angle), sn = Math.sin(angle);
+
+                g = Math.cos(alpha);
+                a = scaling*cs;
+                b = g*scaling*-sn;
+                c = scaling*sn;
+                d = g*scaling*cs;
+                e = verschiebungx;
+                f = verschiebungy;
+
+                ctx.setTransform(a,b,c,d,e,f);
+
+                for (loopx=0;loopx<10;loopx++){
+
+                    for (loopy=0;loopy<10;loopy++){
+
+                        ctx.strokeRect(10+(loopx*20),10+(loopy*20),20,20);
+
+                    }
+                }
+
+			</script>
+
+		</body>
+		<div>Neu</div>
+
+	</body>
+</html>
